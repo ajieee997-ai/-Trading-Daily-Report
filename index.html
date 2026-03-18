@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institutional Trading Daily Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .modal {
+            transition: opacity 0.25s ease;
+        }
+        .modal-open {
+            display: flex !important;
+        }
+        .tab-active {
+            border-bottom: 2px solid #4F46E5;
+            color: #4F46E5;
+        }
+        .report-content {
+            white-space: pre-line;
+        }
+        .price-up {
+            color: #10B981;
+        }
+        .price-down {
+            color: #EF4444;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-chart-line text-indigo-600 text-2xl mr-2"></i>
+                        <span class="font-bold text-xl text-gray-800">Institutional Trading Daily Report</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col gap-6">
+            <!-- 今日速览 -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-medium text-gray-900">今日速览</h2>
+                    <p class="text-sm text-gray-500 mt-1" id="currentDate"></p>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-red-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">上证指数</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">4100.25</span>
+                                <span class="text-xs price-up ml-1">+0.58%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-blue-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">沪深300</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">4625.36</span>
+                                <span class="text-xs price-up ml-1">+0.32%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">上证50</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">2915.48</span>
+                                <span class="text-xs price-down ml-1">-0.15%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-blue-600 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">美元指数</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">99.35</span>
+                                <span class="text-xs price-up ml-1">+0.12%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-yellow-600 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">现货黄金</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">4985.60</span>
+                                <span class="text-xs price-up ml-1">+0.25%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-gray-400 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">现货白银</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">82.35</span>
+                                <span class="text-xs price-down ml-1">-0.42%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-orange-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">原油</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">98.45</span>
+                                <span class="text-xs price-down ml-1">-0.75%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">离岸人民币</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">6.8952</span>
+                                <span class="text-xs price-down ml-1">-0.08%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-orange-600 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">比特币</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">75230.00</span>
+                                <span class="text-xs price-up ml-1">+1.85%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-3 h-3 bg-purple-500 rounded-full mr-2"></div>
+                                <span class="text-sm font-medium">以太坊</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-sm font-medium">2350.68</span>
+                                <span class="text-xs price-up ml-1">+2.15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 日报详情 -->
+            <div id="reportDetail" class="bg-white rounded-lg shadow hidden">
+                <div class="p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900 mb-2">机构交易日报</h1>
+                            <div class="text-sm text-gray-500" id="reportDate">日期: --</div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="editReportBtn" class="text-blue-600 hover:text-blue-800 p-2">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button id="deleteReportBtn" class="text-red-600 hover:text-red-800 p-2">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-200 mb-4">
+                        <div class="flex space-x-8">
+                            <button class="tab-btn py-2 px-1 font-medium tab-active" data-tab="cn">A股市场</button>
+                            <button class="tab-btn py-2 px-1 font-medium text-gray-500 hover:text-gray-700" data-tab="forex">外汇&大宗商品</button>
+                            <button class="tab-btn py-2 px-1 font-medium text-gray-500 hover:text-gray-700" data-tab="crypto">加密货币</button>
+                        </div>
+                    </div>
+                    <div id="reportContent" class="report-content text-gray-700">
+                        <!-- 日报内容将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+
+            <div id="reportTemplate" class="bg-white rounded-lg shadow">
+                <div class="p-6">
+                    <h1 class="text-2xl font-bold text-gray-900 mb-6">机构交易日报</h1>
+                    
+                    <!-- 中国股市 -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-chart-area text-indigo-500 mr-2"></i> A股市场
+                        </h2>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div class="report-content">
+                                <p>上证指数（000001.SH）</p>
+                                <p class="mt-1">水平震荡价格区间：4020 ⸺   4172</p>
+                                <p class="mt-3">沪深300（000300.SH）</p>
+                                <p class="mt-1">窄幅通道价格区间：4550 ⸺   4720</p>
+                                <p class="mt-3">上证50 （000016.SH）</p>
+                                <p class="mt-1">关键水平位2920，有H&S的迹象。</p>
+                                <p class="mt-3">当前A股市场整体处于区间震荡与形态构筑阶段。</p>
+                            </div>
+                            <button id="editCnBtn" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800 hidden">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 外汇&大宗商品 -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-globe text-green-500 mr-2"></i> 外汇&大宗商品
+                        </h2>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div class="report-content">
+                                <p>DXY ： 关注 99.5 附近的支阻互换水平位表现。</p>
+                                <p class="mt-3">CNH ： 整体处于下降趋势中的技术性反弹，震荡区间锁定在 6.86 — 6.93</p>
+                                <p class="mt-3">XAU ： 处于 4400 — 5571 的超宽幅震荡区间中部，近期呈现收敛态势。</p>
+                                <p class="mt-3">XAG ： 震荡区间为 72 — 95，且走势重心仍在持续下移，空头占优。</p>
+                                <p class="mt-3">WTI ： 极端逼空行情后的高位震荡，震荡区间（77—118）</p>
+                            </div>
+                            <button id="editForexBtn" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800 hidden">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 加密货币 -->
+                    <div class="mb-8">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fab fa-bitcoin text-orange-500 mr-2"></i> 加密货币
+                        </h2>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div class="report-content">
+                                <p>BTC ： 支阻互换水平位持续收敛，下方最强清算点位关注 72700</p>
+                                <p class="mt-3">ETH ： 走势极其强劲，已实现强势突破，下方最强清算点关注2227</p>
+                            </div>
+                            <button id="editCryptoBtn" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800 hidden">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 交易提醒 -->
+                    <div>
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                            <i class="fas fa-bell text-yellow-500 mr-2"></i> 交易提醒
+                        </h2>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg relative">
+                            <p>重点关注上证50在2920处的形态演变，以及ETH突破后的回踩力度。</p>
+                            <button id="editReminderBtn" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800 hidden">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 悬浮新建按钮 -->
+    <button id="floatNewBtn" class="fixed bottom-6 right-6 bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg hidden">
+        <i class="fas fa-plus text-xl"></i>
+    </button>
+
+    <!-- 日报模态框 -->
+    <div id="reportModal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 max-w-4xl shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-medium text-gray-900" id="modalTitle">新建日报</h3>
+                    <button id="closeModalBtn" class="text-gray-400 hover:text-gray-500">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <form id="reportForm" class="space-y-6">
+                    <div>
+                        <label for="reportDateInput" class="block text-sm font-medium text-gray-700">日期</label>
+                        <input type="date" id="reportDateInput" name="date" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    
+                    <!-- 日报内容输入 -->
+                    <div class="space-y-6">
+                        <!-- 中国股市 -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">A股市场</label>
+                            </div>
+                            <textarea id="cnContent" rows="6" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="输入A股市场分析..."></textarea>
+                        </div>
+
+                        <!-- 外汇&大宗商品 -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">外汇&大宗商品</label>
+                            </div>
+                            <textarea id="forexContent" rows="6" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="输入外汇和大宗商品分析..."></textarea>
+                        </div>
+
+                        <!-- 加密货币 -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">加密货币</label>
+                            </div>
+                            <textarea id="cryptoContent" rows="4" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="输入加密货币分析..."></textarea>
+                        </div>
+
+                        <!-- 交易提醒 -->
+                        <div>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-sm font-medium text-gray-700">交易提醒</label>
+                            </div>
+                            <textarea id="reminderContent" rows="2" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="输入交易提醒..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end space-x-3 pt-4">
+                        <button type="button" id="cancelBtn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md">
+                            取消
+                        </button>
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md">
+                            保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认删除模态框 -->
+    <div id="deleteModal" class="modal fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+                    <i class="fas fa-exclamation-triangle text-red-600"></i>
+                </div>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mt-4">确认删除</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">
+                        您确定要删除这篇交易日报吗？此操作无法撤销。
+                    </p>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4">
+                    <button id="cancelDeleteBtn" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md">
+                        取消
+                    </button>
+                    <button id="confirmDeleteBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md">
+                        删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 日报数据存储
+        let reports = JSON.parse(localStorage.getItem('institutionalTradingReports')) || [];
+        let currentEditingId = null;
+        let deleteId = null;
+        let currentEditingSection = null;
+
+        // DOM元素
+        const reportModal = document.getElementById('reportModal');
+        const deleteModal = document.getElementById('deleteModal');
+        const reportForm = document.getElementById('reportForm');
+        const reportDetail = document.getElementById('reportDetail');
+        const reportTemplate = document.getElementById('reportTemplate');
+        const floatNewBtn = document.getElementById('floatNewBtn');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const modalTitle = document.getElementById('modalTitle');
+        const editReportBtn = document.getElementById('editReportBtn');
+        const deleteReportBtn = document.getElementById('deleteReportBtn');
+
+        // 编辑按钮
+        const editCnBtn = document.getElementById('editCnBtn');
+        const editForexBtn = document.getElementById('editForexBtn');
+        const editCryptoBtn = document.getElementById('editCryptoBtn');
+        const editReminderBtn = document.getElementById('editReminderBtn');
+
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const reportContent = document.getElementById('reportContent');
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 设置今天日期为默认值和显示
+            const today = new Date();
+            const dateString = today.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('currentDate').textContent = dateString;
+            document.getElementById('reportDateInput').valueAsDate = today;
+            
+            // 显示今天的日报（如果有）
+            const todayReport = reports.find(r => r.date === today.toISOString().split('T')[0]);
+            if (todayReport) {
+                displayReport(todayReport.id);
+            } else {
+                // 如果没有今天的日报，显示新建按钮
+                floatNewBtn.classList.remove('hidden');
+            }
+            
+            // 标签页事件监听
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => {
+                        b.classList.remove('tab-active', 'text-gray-900');
+                        b.classList.add('text-gray-500');
+                    });
+                    
+                    this.classList.remove('text-gray-500');
+                    this.classList.add('tab-active', 'text-gray-900');
+                    
+                    const tab = this.getAttribute('data-tab');
+                    displayReportTab(tab);
+                });
+            });
+            
+            // 编辑按钮事件
+            editCnBtn.addEventListener('click', () => editSection('cn'));
+            editForexBtn.addEventListener('click', () => editSection('forex'));
+            editCryptoBtn.addEventListener('click', () => editSection('crypto'));
+            editReminderBtn.addEventListener('click', () => editSection('reminder'));
+            
+            // 新建按钮事件
+            floatNewBtn.addEventListener('click', () => openModal());
+        });
+
+        // 事件监听器
+        closeModalBtn.addEventListener('click', () => closeModal());
+        cancelBtn.addEventListener('click', () => closeModal());
+        reportForm.addEventListener('submit', handleSubmit);
+        cancelDeleteBtn.addEventListener('click', () => closeDeleteModal());
+        confirmDeleteBtn.addEventListener('click', confirmDelete);
+        editReportBtn.addEventListener('click', () => editCurrentReport());
+        deleteReportBtn.addEventListener('click', () => openDeleteModal(currentEditingId));
+
+        // 打开模态框
+        function openModal(id = null) {
+            currentEditingId = id;
+            floatNewBtn.classList.add('hidden'); // 隐藏新建按钮
+            
+            if (id) {
+                const report = reports.find(r => r.id === id);
+                modalTitle.textContent = '编辑日报';
+                document.getElementById('reportDateInput').value = report.date;
+                document.getElementById('cnContent').value = report.cn || '';
+                document.getElementById('forexContent').value = report.forex || '';
+                document.getElementById('cryptoContent').value = report.crypto || '';
+                document.getElementById('reminderContent').value = report.reminder || '';
+            } else {
+                modalTitle.textContent = '新建日报';
+                reportForm.reset();
+                document.getElementById('reportDateInput').valueAsDate = new Date();
+            }
+            
+            reportModal.classList.add('modal-open');
+            reportTemplate.classList.add('hidden');
+            reportDetail.classList.add('hidden');
+        }
+
+        // 编辑特定部分
+        function editSection(section) {
+            if (!currentEditingId) return;
+            
+            const report = reports.find(r => r.id === currentEditingId);
+            if (!report) return;
+            
+            currentEditingSection = section;
+            
+            // 设置对应的字段值
+            switch(section) {
+                case 'cn':
+                    document.getElementById('cnContent').value = report.cn || '';
+                    break;
+                case 'forex':
+                    document.getElementById('forexContent').value = report.forex || '';
+                    break;
+                case 'crypto':
+                    document.getElementById('cryptoContent').value = report.crypto || '';
+                    break;
+                case 'reminder':
+                    document.getElementById('reminderContent').value = report.reminder || '';
+                    break;
+            }
+            
+            // 打开模态框
+            modalTitle.textContent = `编辑${getSectionName(section)}`;
+            reportModal.classList.add('modal-open');
+            reportTemplate.classList.add('hidden');
+            reportDetail.classList.add('hidden');
+        }
+
+        // 获取部分名称
+        function getSectionName(section) {
+            const names = {
+                'cn': 'A股市场',
+                'forex': '外汇&大宗商品',
+                'crypto': '加密货币',
+                'reminder': '交易提醒'
+            };
+            return names[section] || '';
+        }
+
+        // 关闭模态框
+        function closeModal() {
+            reportModal.classList.remove('modal-open');
+            reportForm.reset();
+            currentEditingId = null;
+            currentEditingSection = null;
+            
+            // 检查是否需要显示新建按钮
+            const today = new Date().toISOString().split('T')[0];
+            const todayReport = reports.find(r => r.date === today);
+            if (!todayReport) {
+                floatNewBtn.classList.remove('hidden');
+            }
+        }
+
+        // 关闭删除确认模态框
+        function closeDeleteModal() {
+            deleteModal.classList.remove('modal-open');
+            deleteId = null;
+        }
+
+        // 处理表单提交
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            if (currentEditingId) {
+                // 编辑现有日报
+                const index = reports.findIndex(r => r.id === currentEditingId);
+                
+                if (currentEditingSection) {
+                    // 编辑特定部分
+                    reports[index][currentEditingSection] = document.getElementById(`${currentEditingSection}Content`).value;
+                } else {
+                    // 编辑整个日报
+                    reports[index] = {
+                        ...reports[index],
+                        date: document.getElementById('reportDateInput').value,
+                        cn: document.getElementById('cnContent').value,
+                        forex: document.getElementById('forexContent').value,
+                        crypto: document.getElementById('cryptoContent').value,
+                        reminder: document.getElementById('reminderContent').value,
+                        updatedAt: new Date().toISOString()
+                    };
+                }
+            } else {
+                // 添加新日报
+                const newReport = {
+                    id: Date.now().toString(),
+                    date: document.getElementById('reportDateInput').value,
+                    cn: document.getElementById('cnContent').value,
+                    forex: document.getElementById('forexContent').value,
+                    crypto: document.getElementById('cryptoContent').value,
+                    reminder: document.getElementById('reminderContent').value,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                reports.unshift(newReport);
+            }
+            
+            saveReports();
+            closeModal();
+            
+            // 显示最新编辑的日报
+            if (currentEditingId) {
+                displayReport(currentEditingId);
+            } else {
+                if (reports.length > 0) {
+                    displayReport(reports[0].id);
+                }
+            }
+        }
+
+        // 编辑当前显示的日报
+        function editCurrentReport() {
+            if (currentEditingId) {
+                openModal(currentEditingId);
+            }
+        }
+
+        // 打开删除确认模态框
+        function openDeleteModal(id) {
+            deleteId = id;
+            deleteModal.classList.add('modal-open');
+        }
+
+        // 确认删除
+        function confirmDelete() {
+            reports = reports.filter(r => r.id !== deleteId);
+            saveReports();
+            
+            // 如果删除的是当前显示的日报，则显示模板
+            if (deleteId === currentEditingId) {
+                currentEditingId = null;
+                reportDetail.classList.add('hidden');
+                reportTemplate.classList.remove('hidden');
+                
+                // 检查是否需要显示新建按钮
+                const today = new Date().toISOString().split('T')[0];
+                const todayReport = reports.find(r => r.date === today);
+                if (!todayReport) {
+                    floatNewBtn.classList.remove('hidden');
+                }
+            }
+            
+            closeDeleteModal();
+        }
+
+        // 保存到本地存储
+        function saveReports() {
+            localStorage.setItem('institutionalTradingReports', JSON.stringify(reports));
+        }
+
+        // 显示日报详情
+        function displayReport(id) {
+            const report = reports.find(r => r.id === id);
+            if (!report) return;
+            
+            currentEditingId = id;
+            floatNewBtn.classList.add('hidden'); // 隐藏新建按钮
+            
+            document.getElementById('reportDate').textContent = `日期: ${report.date}`;
+            
+            // 显示编辑按钮
+            editCnBtn.classList.remove('hidden');
+            editForexBtn.classList.remove('hidden');
+            editCryptoBtn.classList.remove('hidden');
+            editReminderBtn.classList.remove('hidden');
+            
+            // 构建完整的报告内容
+            reportContent.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">A股市场</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div id="cnContentText" class="report-content">${report.cn || ''}</div>
+                            <button onclick="editSection('cn')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">外汇&大宗商品</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div id="forexContentText" class="report-content">${report.forex || ''}</div>
+                            <button onclick="editSection('forex')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">加密货币</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <div id="cryptoContentText" class="report-content">${report.crypto || ''}</div>
+                            <button onclick="editSection('crypto')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">交易提醒</h3>
+                        <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg relative">
+                            <p>${report.reminder || ''}</p>
+                            <button onclick="editSection('reminder')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 显示默认标签页
+            tabBtns.forEach(b => {
+                b.classList.remove('tab-active', 'text-gray-900');
+                b.classList.add('text-gray-500');
+            });
+            document.querySelector('[data-tab="cn"]').classList.remove('text-gray-500');
+            document.querySelector('[data-tab="cn"]').classList.add('tab-active', 'text-gray-900');
+            
+            reportTemplate.classList.add('hidden');
+            reportDetail.classList.remove('hidden');
+        }
+
+        // 显示指定标签页内容
+        function displayReportTab(tab) {
+            const report = reports.find(r => r.id === currentEditingId);
+            if (!report) return;
+            
+            let content = '';
+            switch(tab) {
+                case 'cn':
+                    content = `
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">A股市场</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <pre class="report-content">${report.cn || ''}</pre>
+                            <button onclick="editSection('cn')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    `;
+                    break;
+                case 'forex':
+                    content = `
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">外汇&大宗商品</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <pre class="report-content">${report.forex || ''}</pre>
+                            <button onclick="editSection('forex')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    `;
+                    break;
+                case 'crypto':
+                    content = `
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">加密货币</h3>
+                        <div class="bg-gray-50 p-4 rounded-lg relative">
+                            <pre class="report-content">${report.crypto || ''}</pre>
+                            <button onclick="editSection('crypto')" class="absolute top-2 right-2 text-indigo-600 hover:text-indigo-800">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            reportContent.innerHTML = content;
+        }
+    </script>
+</body>
+</html>
